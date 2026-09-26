@@ -1,58 +1,195 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Task Manager Application
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A simple and elegant task management application built with Laravel that allows users to manage their personal to-do lists with authentication and authorization.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **User Authentication**
+  - User registration with email and password
+  - Secure login with "Remember Me" option
+  - Password reset functionality via email
+  - Session management and logout
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Task Management**
+  - Create tasks with title and optional description
+  - View all personal tasks in a clean list
+  - Edit and update existing tasks
+  - Delete tasks with confirmation
+  - Mark tasks as complete/incomplete with visual indicators
+  - View task creation timestamps
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Security & Authorization**
+  - Users can only view, edit, and delete their own tasks
+  - Policy-based authorization ensures data privacy
+  - CSRF protection on all forms
+  - Secure password hashing
 
-## Learning Laravel
+## Technology Stack
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **Framework**: Laravel 11.x
+- **PHP**: 8.4
+- **Database**: MySQL
+- **Frontend**: Blade Templates with Tailwind CSS
+- **Authentication**: Laravel's built-in authentication
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Installation
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+### Prerequisites
 
-## Agentic Development
+- PHP 8.4 or higher
+- Composer
+- MySQL
+- Node.js & NPM (optional, for asset compilation)
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+### Setup Instructions
 
-```bash
-composer require laravel/boost --dev
+1. **Clone the repository**
+   ```bash
+   git clone <your-repository-url>
+   cd tasks
+   ```
 
-php artisan boost:install
+2. **Install dependencies**
+   ```bash
+   composer install
+   ```
+
+3. **Environment configuration**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+
+4. **Configure database**
+   
+   Edit `.env` file and set your database credentials:
+   ```env
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=tasks
+   DB_USERNAME=root
+   DB_PASSWORD=your_password
+   ```
+
+5. **Run migrations**
+   ```bash
+   php artisan migrate
+   ```
+
+6. **Configure email (optional)**
+   
+   For password reset functionality, configure your email settings in `.env`:
+   
+   **For development (logs emails to file):**
+   ```env
+   MAIL_MAILER=log
+   ```
+   
+   **For production (example with Gmail):**
+   ```env
+   MAIL_MAILER=smtp
+   MAIL_HOST=smtp.gmail.com
+   MAIL_PORT=587
+   MAIL_USERNAME=your-email@gmail.com
+   MAIL_PASSWORD=your-app-password
+   MAIL_ENCRYPTION=tls
+   MAIL_FROM_ADDRESS=your-email@gmail.com
+   MAIL_FROM_NAME="${APP_NAME}"
+   ```
+
+7. **Start the development server**
+   ```bash
+   php artisan serve
+   ```
+
+8. **Access the application**
+   
+   Open your browser and navigate to `http://localhost:8000`
+
+## Usage
+
+1. **Register a new account** at `/register`
+2. **Login** with your credentials at `/login`
+3. **Create tasks** by clicking "Create New Task"
+4. **Manage your tasks** from the main dashboard:
+   - Click the checkbox to mark tasks as complete/incomplete
+   - Click "Edit" to modify a task
+   - Click "Delete" to remove a task
+5. **Logout** when finished
+
+## Project Structure
+
+```
+├── app/
+│   ├── Http/Controllers/
+│   │   ├── Auth/              # Authentication controllers
+│   │   └── TaskController.php # Task CRUD operations
+│   ├── Models/
+│   │   ├── Task.php           # Task model
+│   │   └── User.php           # User model
+│   └── Policies/
+│       └── TaskPolicy.php     # Task authorization policy
+├── database/
+│   └── migrations/            # Database migrations
+├── resources/
+│   └── views/
+│       ├── auth/              # Authentication views
+│       ├── layouts/           # Layout templates
+│       └── tasks/             # Task management views
+└── routes/
+    └── web.php                # Application routes
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+## Database Schema
 
-## Contributing
+### Users Table
+- id
+- name
+- email (unique)
+- password
+- remember_token
+- timestamps
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Tasks Table
+- id
+- user_id (foreign key)
+- title
+- description (nullable)
+- is_completed (boolean, default: false)
+- timestamps
 
-## Code of Conduct
+## Routes
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Authentication Routes
+- `GET /login` - Login form
+- `POST /login` - Process login
+- `POST /logout` - Logout user
+- `GET /register` - Registration form
+- `POST /register` - Process registration
+- `GET /forgot-password` - Password reset request form
+- `POST /forgot-password` - Send reset link
+- `GET /reset-password/{token}` - Password reset form
+- `POST /reset-password` - Process password reset
 
-## Security Vulnerabilities
+### Task Routes (Authenticated)
+- `GET /tasks` - List all user tasks
+- `GET /tasks/create` - Create task form
+- `POST /tasks` - Store new task
+- `GET /tasks/{task}/edit` - Edit task form
+- `PUT /tasks/{task}` - Update task
+- `DELETE /tasks/{task}` - Delete task
+- `POST /tasks/{task}/toggle` - Toggle task completion
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Security Features
+
+- Password hashing with bcrypt
+- CSRF token protection
+- SQL injection prevention via Eloquent ORM
+- Authorization policies prevent unauthorized access
+- Session regeneration on login
+- Secure password reset tokens
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
