@@ -190,6 +190,32 @@ A simple and elegant task management application built with Laravel that allows 
 - Session regeneration on login
 - Secure password reset tokens
 
+## Deployment
+
+This application can be deployed for free with automatic GitHub integration. See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed instructions.
+
+### Quick Deploy Options:
+
+**Railway.app (Recommended)**
+- Free $5 credit/month
+- MySQL database included
+- Auto-deployment from GitHub
+- Full database access
+- [Deploy Guide →](DEPLOYMENT.md#option-1-railwayapp-recommended---easiest-setup)
+
+**Render.com**
+- 100% free forever
+- PostgreSQL database
+- Auto-deployment from GitHub
+- [Deploy Guide →](DEPLOYMENT.md#option-2-rendercom-100-free-forever)
+
+### Deployment Files Included:
+- `Procfile` - Process configuration
+- `railway.json` - Railway configuration
+- `Dockerfile` - Container configuration
+- `docker-compose.yml` - Local Docker setup
+- `DEPLOYMENT.md` - Complete deployment guide
+
 ## License
 
 This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
